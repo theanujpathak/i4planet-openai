@@ -9,8 +9,14 @@ settings.py
 *.so
 
 # Distribution / packaging
-.Python
+.env
+.venv
+env/
 venv/
+ENV/
+env.bak/
+venv.bak/
+.Python
 build/
 develop-eggs/
 dist/
