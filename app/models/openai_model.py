@@ -35,3 +35,14 @@ def generate_text(prompt):
         app.logger.error(f"OpenAI API error: {e}")
         message = "An error occurred while generating text. Please try again later."
     return message
+
+def get_chat(input_text):
+    try:
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content":input_text}]
+        )
+        message = completion.choices[0].message
+    except Exception as e:
+        message = str(e)
+    return message
