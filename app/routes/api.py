@@ -5,7 +5,7 @@ api = Blueprint('api', __name__)
 
 @api.route('/')
 def home():
-    return 'Welcome to the OpenAI API'
+    return 'Welcome to the i4planet OpenAI API'
 
 @api.route('/generate_text', methods=['POST'])
 def generate():
