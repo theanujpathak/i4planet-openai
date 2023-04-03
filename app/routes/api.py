@@ -1,9 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_uploads import UploadSet, configure_uploads, IMAGES
 from app.models.openai_model import generate_text, get_openai_prediction, get_chat, edit_image, generate_image
-from app import images
-
-images = UploadSet('images', IMAGES)
 
 api = Blueprint('api', __name__)
 
