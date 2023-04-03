@@ -1,5 +1,6 @@
 import openai
 from config import Config
+import json
 
 openai.api_key = Config.OPENAI_API_KEY
 
@@ -40,9 +41,40 @@ def get_chat(input_text):
     try:
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
+            
             messages=[{"role": "user", "content":input_text}]
         )
         message = completion.choices[0].message
     except Exception as e:
         message = str(e)
     return message
+
+def edit_image(image,prompt):
+    model = "image-alpha-001"
+    image_bytes = image.read()
+    try:
+        response = openai.Image.create_edit(
+            prompt=prompt,
+            image=image_bytes,
+            n=1,
+            size="1024x1024",
+            response_format="url"
+        )
+        image_url = response['data'][0]['url']
+        return {'image_url': image_url}
+    except Exception as e:
+        return {'error': str(e)}
+
+def generate_image(prompt):
+    # model = "image-alpha-001"
+    # image_bytes = image.read()
+    try:
+        response = openai.Image.create(
+            prompt=prompt,
+            n=2,
+            size="1024x1024"
+            )
+        image_url = response['data'][0]['url']
+        return {'image_url': image_url}
+    except Exception as e:
+        return {'error': str(e)}
