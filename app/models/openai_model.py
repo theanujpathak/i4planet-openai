@@ -80,3 +80,4 @@ def generate_image(prompt):
         return {'error': str(e)}
     
 # added comment 
+# added second comment
