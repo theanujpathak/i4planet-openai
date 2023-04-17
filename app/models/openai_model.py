@@ -78,3 +78,5 @@ def generate_image(prompt):
         return {'image_url': image_url}
     except Exception as e:
         return {'error': str(e)}
+    
+# added comment 
