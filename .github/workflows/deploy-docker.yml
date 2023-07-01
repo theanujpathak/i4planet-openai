@@ -22,20 +22,20 @@ jobs:
       - name: Transfer Docker image to Ubuntu server
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SERVER_PRIVATE_KEY }}
-          port: ${{ secrets.SERVER_PORT }}
+          host: ${{ secrets.SFTP_SERVER }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SFTP_PORT }}
           source: i4planet-openai.tar
           target: /tmp/i4planet-openai.tar
 
       - name: Deploy to Ubuntu server
         uses: appleboy/ssh-action@master
         with:
+          host: ${{ secrets.SFTP_SERVER }}
           username: ${{ secrets.SFTP_USERNAME }}
-          server: ${{ secrets.SFTP_SERVER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SFTP_PORT }}
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker stop i4planet-openai || true
             docker rm i4planet-openai || true
