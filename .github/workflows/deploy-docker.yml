@@ -20,14 +20,14 @@ jobs:
         run: docker save -o i4planet-openai.tar i4planet-openai:latest
 
       - name: Transfer Docker image to Ubuntu server
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        uses: appleboy/scp-action@master
         with:
+          host: ${{ secrets.SFTP_SERVER }}
           username: ${{ secrets.SFTP_USERNAME }}
-          server: ${{ secrets.SFTP_SERVER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SFTP_PORT }}
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          local_path: ./i4planet-openai.tar
-          remote_path: /tmp/
+          source: i4planet-openai.tar
+          target: /tmp/i4planet-openai.tar
 
       - name: Deploy to Ubuntu server
         uses: appleboy/ssh-action@master
@@ -37,7 +37,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SFTP_PORT }}
           script: |
-            docker stop i4planet-openai || true
-            docker rm i4planet-openai || true
+            docker stop i4planet_openai:1.0 || true
+            docker rm i4planet_openai:1.0 || true
             docker load -i /tmp/i4planet-openai.tar
             docker run -d -p 5000:5000 --name i4planet-openai i4planet-openai:latest
