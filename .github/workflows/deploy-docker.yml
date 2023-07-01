@@ -40,5 +40,5 @@ jobs:
             docker stop i4planet-openai || true
             docker rm i4planet-openai || true
             docker load -i /tmp/i4planet-openai.tar/i4planet-openai.tar
-            docker run -d -p 5000:5000 --name i4planet-openai i4planet-openai:latest
+            docker run -d -p 5000:5000 --name i4planet-openai -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} i4planet-openai:latest
             rm -rf /tmp/i4planet-openai.tar
